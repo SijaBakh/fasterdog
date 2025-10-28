@@ -9,7 +9,7 @@ import (
 	"slices"
 	"strings"
 
-	"fasterdog/internal/models"
+	"github.com/SijaBakh/fasterdog/internal/models"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/redis/go-redis/v9"

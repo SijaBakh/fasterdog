@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"fasterdog/internal/adapter/db"
+	"github.com/SijaBakh/fasterdog/internal/adapter/db"
 )
 
 type FasterdogRepository struct {

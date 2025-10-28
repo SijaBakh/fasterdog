@@ -4,9 +4,9 @@ import (
 	"context"
 	"net/http"
 
-	"fasterdog/internal/adapter/db"
-	"fasterdog/internal/adapter/redis"
-	"fasterdog/internal/repository"
+	"github.com/SijaBakh/fasterdog/internal/adapter/db"
+	"github.com/SijaBakh/fasterdog/internal/adapter/redis"
+	"github.com/SijaBakh/fasterdog/internal/repository"
 )
 
 type TokenMiddleware struct {
