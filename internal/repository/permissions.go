@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	"fasterdog/internal/models"
+	"github.com/SijaBakh/fasterdog/internal/models"
 )
 
 func (fr *FasterdogRepository) GetPermissions(ctx context.Context, userName, domainName string) (

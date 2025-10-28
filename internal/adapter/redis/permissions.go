@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	"fasterdog/internal/models"
+	"github.com/SijaBakh/fasterdog/internal/models"
 )
 
 func (rc *RedisClient) GetPermissions(ctx context.Context, username string) (*models.PermissionsResult, error) {

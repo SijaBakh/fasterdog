@@ -1,4 +1,4 @@
-module fasterdog
+module github.com/SijaBakh/fasterdog
 
 go 1.24.0
 
