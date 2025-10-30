@@ -12,19 +12,12 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-type Route interface {
-	Method() string
-	Path() string
-}
+type Route = models.Route
 
-func NewRoute(m, p string) Route {
-	return models.NewRoute(m, p)
-}
-
-func GetRoutes(r chi.Routes) ([]models.Route, error) {
+func GetRoutes(r chi.Routes) ([]Route, error) {
 	var routes []models.Route
 	walkFunc := func(method, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
-		routes = append(routes, *models.NewRoute(method, route))
+		routes = append(routes, Route{Method: method, Path: route})
 		return nil
 	}
 
@@ -32,7 +25,7 @@ func GetRoutes(r chi.Routes) ([]models.Route, error) {
 	return routes, err
 }
 
-func CheckRoutes(dsn string, routes []models.Route) error {
+func CheckRoutes(dsn string, routes []Route) error {
 	ctx := context.Background()
 	db, err := db.New(dsn, ctx)
 	if err != nil {
@@ -60,8 +53,8 @@ func CheckRoutes(dsn string, routes []models.Route) error {
 	return nil
 }
 
-func difference(routes, dbRoutes []models.Route) []models.Route {
-	difRoutes := make([]models.Route, len(routes))
+func difference(routes, dbRoutes []Route) []Route {
+	difRoutes := make([]Route, len(routes))
 	for _, r := range routes {
 		if slices.Contains(dbRoutes, r) {
 			continue
