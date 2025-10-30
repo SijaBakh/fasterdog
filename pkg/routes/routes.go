@@ -2,7 +2,6 @@ package routes
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"slices"
 
@@ -39,19 +38,13 @@ func CheckRoutes(dsn string, routes []Route) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("Получили все роуты")
-	fmt.Println(dbRoutes)
 
 	if len(dbRoutes) == 0 {
 		err := fr.ExecuteManyRoutes(ctx, routes)
 		return err
 	}
-	fmt.Println("Ищем различия")
-	fmt.Println(routes)
 
 	difRoutes := difference(routes, dbRoutes)
-	fmt.Println("Различия")
-	fmt.Println(routes)
 	if len(difRoutes) > 0 {
 		err := fr.ExecuteManyRoutes(ctx, difRoutes)
 		return err
