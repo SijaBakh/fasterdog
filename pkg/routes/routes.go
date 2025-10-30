@@ -61,7 +61,7 @@ func CheckRoutes(dsn string, routes []Route) error {
 }
 
 func difference(routes, dbRoutes []Route) []Route {
-	difRoutes := make([]Route, len(routes))
+	difRoutes := make([]Route, 0, len(routes))
 	for _, r := range routes {
 		if slices.Contains(dbRoutes, r) {
 			continue
