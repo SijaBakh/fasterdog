@@ -105,7 +105,7 @@ func (m *TokenMiddleware) Handler(next http.Handler) http.Handler {
 			Path:   strings.Split(r.URL.Path, "?")[0],
 		}
 
-		if !isRouteAllowed(route, permissions.Routes) {
+		if !slices.Contains(permissions.Routes, route) {
 			slog.Info(
 				"У пользователя нет прав доступа к эндпоинту",
 				"username", c.Username,
@@ -171,13 +171,4 @@ func (m TokenMiddleware) decodeToken(tokenStr string, secret any, algorithm stri
 		return nil, errors.New("data field missing or invalid type")
 	}
 	return nil, errors.New("invalid token claims")
-}
-
-func isRouteAllowed(route models.RoutePermission, allowed []models.RoutePermission) bool {
-	for _, r := range allowed {
-		if r.Method == route.Method && r.Path == route.Path {
-			return true
-		}
-	}
-	return false
 }
