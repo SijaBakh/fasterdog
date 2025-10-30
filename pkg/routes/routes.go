@@ -12,10 +12,19 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+type Route interface {
+	Method() string
+	Path() string
+}
+
+func NewRoute(m, p string) Route {
+	return models.NewRoute(m, p)
+}
+
 func GetRoutes(r chi.Routes) ([]models.Route, error) {
 	var routes []models.Route
 	walkFunc := func(method, route string, handler http.Handler, middlewares ...func(http.Handler) http.Handler) error {
-		routes = append(routes, models.Route{Method: method, Path: route})
+		routes = append(routes, *models.NewRoute(method, route))
 		return nil
 	}
 
