@@ -57,6 +57,27 @@ r := chi.NewRouter()
 
 r.Use(mw)
 ```
+Получение данных из контекста
+```go
+import (
+    "net/http"
+
+    fasterdog "github.com/SijaBakh/fasterdog/pkg/middlewares"
+)
+
+type Handler struct {
+	logger          *logger.Logger
+	service         serviceInterface.Service
+}
+
+func (h Handler) Get(w http.ResponseWriter, r *http.Request) {
+	username, _ := r.Context().Value(fasterdog.CtxUsernameKey).(string)
+	groups, _ := r.Context().Value(fasterdog.CtxGroupsKey).([]string)
+	ci, _ := r.Context().Value(fasterdog.CtxCIKey).([]string)
+	adminIS, _ := r.Context().Value(fasterdog.CtxAdminISKey).(bool)
+    ...
+}
+```
 
 ### 2. Routes
 
