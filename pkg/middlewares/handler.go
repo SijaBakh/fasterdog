@@ -24,6 +24,11 @@ const (
 	CtxAdminISKey  ctxKey = "admin_is"
 )
 
+type Claims struct {
+	Username string   `json:"username"`
+	Groups   []string `json:"groups"`
+}
+
 func (m *TokenMiddleware) Handler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -45,7 +50,7 @@ func (m *TokenMiddleware) Handler(next http.Handler) http.Handler {
 		}
 
 		b, _ := json.Marshal(tokenData)
-		var c models.Claims
+		var c Claims
 		_ = json.Unmarshal(b, &c)
 
 		if len(c.Groups) == 0 {
@@ -65,7 +70,7 @@ func (m *TokenMiddleware) Handler(next http.Handler) http.Handler {
 			return
 		}
 
-		permissions, err := m.RedisClient.GetPermissions(r.Context(), c.Username)
+		permissions, err := m.FasterdogService.RGetPermissions(r.Context(), c.Username)
 		if permissions == nil && errors.Is(err, redis.Nil) {
 			slog.Info(
 				"У пользователя нет прав доступа",
@@ -80,7 +85,7 @@ func (m *TokenMiddleware) Handler(next http.Handler) http.Handler {
 				"error", err.Error(),
 				"username", c.Username,
 			)
-			permissions, err = m.FasterdogRepository.GetPermissions(r.Context(), c.Username, m.DomainName)
+			permissions, err = m.FasterdogService.GetPermissions(r.Context(), c.Username, m.DomainName)
 			if permissions == nil && err == nil {
 				slog.Info(
 					"У пользователя нет прав доступа",

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"slices"
 
-	"github.com/SijaBakh/fasterdog/internal/adapter/db"
+	"github.com/SijaBakh/fasterdog/internal/infrastructure/db"
 	"github.com/SijaBakh/fasterdog/internal/models"
 	"github.com/SijaBakh/fasterdog/internal/repository"
 
